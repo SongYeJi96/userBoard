@@ -25,12 +25,12 @@
 	String msg = null;
 	if(request.getParameter("changeMemberPw") == null
 		|| request.getParameter("changeMemberPw").equals("")){
-			msg ="변경할 Password가 입력되지 않았습니다.";
+	msg ="변경할 비밀번호가 입력되지 않았습니다.";
 	} else if(request.getParameter("memberPwCheck") == null
 		|| request.getParameter("memberPwCheck").equals("")){
-			msg ="Password 확인이 입력되지 않았습니다.";
+	msg ="비밀번호 확인이 입력되지 않았습니다.";
 	} else if(!request.getParameter("changeMemberPw").equals(request.getParameter("memberPwCheck"))){
-			msg ="Password가 일치하지 않습니다.";
+	msg ="비밀번호가 일치하지 않습니다.";
 	}
 	if(msg != null) {
 		String rmsg =  URLEncoder.encode(msg,"utf-8");

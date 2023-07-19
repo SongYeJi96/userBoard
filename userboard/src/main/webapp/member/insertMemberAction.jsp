@@ -5,7 +5,7 @@
 <%
 	// request 인코딩
 	request.setCharacterEncoding("utf-8");
-			
+	
 	/* session 유효성 검사
 	* session의 값이 null이 아니면 home.jsp 페이지로 리턴
 	*/
@@ -21,10 +21,10 @@
 	String msg = null;
 	if(request.getParameter("memberId") == null
 		|| request.getParameter("memberId").equals("")){
-			msg = "Id가 입력되지 않았습니다.";
+	msg = "Id가 입력되지 않았습니다.";
 	} else if(request.getParameter("memberPw") == null
 		|| request.getParameter("memberPw").equals("")){
-			msg = "Password가 입력되지 않았습니다.";
+	msg = "Password가 입력되지 않았습니다.";
 	}
 	if(msg != null) {
     	String rmsg =  URLEncoder.encode(msg,"utf-8");
@@ -94,5 +94,5 @@
 		response.sendRedirect(request.getContextPath()+"/home.jsp");
 	}else {
 		System.out.println("insertMemberAction error row값 : "+row);
-	}	
+	}
 %>

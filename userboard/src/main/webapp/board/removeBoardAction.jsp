@@ -15,7 +15,7 @@
 	// 요청값 유효성 검사(boardNo)
 	if(request.getParameter("boardNo") == null
 		|| request.getParameter("boardNo").equals("")){
-			response.sendRedirect(request.getContextPath()+"/home.jsp");		
+	response.sendRedirect(request.getContextPath()+"/home.jsp");		
 	}
 	
 	// 값 저장(boardNo)

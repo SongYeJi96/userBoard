@@ -38,7 +38,7 @@
 	ResultSet boardRs = null;
 	// 쿼리 작성
 	String sql = "SELECT board_no boardNo, local_name localName, board_title boardTitle, board_content boardContent, member_id memberId, createdate, updatedate"
-							+" "+"FROM board WHERE board_no = ?";
+	+" "+"FROM board WHERE board_no = ?";
 	boardStmt = conn.prepareStatement(sql); // (?, 1)
 	boardStmt.setInt(1, boardNo); 
 	System.out.println(boardStmt + "<--modifyboard.jsp stmt");
@@ -74,7 +74,6 @@
          m.put("localName", localRs.getString("localName"));
          localList.add(m);
 	}
-	
 %>
 
 <!DOCTYPE html>
@@ -82,83 +81,92 @@
 <head>
 <meta charset="UTF-8">
 <title>modifyBoard.jsp</title>
+<jsp:include page="/inc/link.jsp"></jsp:include>
 </head>
 <body>
-	<!-- 메인메뉴(가로) -->	
-		<div class="container p-3">
+	<div class="main-container">
+		<!-- 메인메뉴(가로) -->		
+		<div class="cell-header">
 			<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
 		</div>
-	<!-- 메세지 확인 -->
-	<div>
-		<%
-			String msg = request.getParameter("msg");
-			if(msg != null){
-		%>
-			<%=msg%>
-		<%		
-			}
-		%>
-	</div>	
-	<!-- boardList 결과-->	
-	<form action= "<%=request.getContextPath()%>/board/modifyBoardAction.jsp" method="post">
-		<div class="container p-3">
-			<table class="table table-sm">
-				<tr>
-					<th>글번호</th>
-					<td>
-						<input type ="number" name="boardNo" value="<%=board.getBoardNo()%>" readonly="readonly">
-					</td>
-				</tr>
-				<tr>
-					<th>지역명</th>
-					<td>
-						<select name="localName">
-								<%
-									for(HashMap<String, Object> m : localList){
-										if(board.getLocalName().equals((String)m.get("localName"))){		
-								%>
-											<option value="<%=(String)m.get("localName")%>" selected="selected"><%=(String)m.get("localName")%></option>									
-								<%		
-										} else if(!board.getLocalName().equals((String)m.get("localName"))){
-								%>
-											<option value="<%=(String)m.get("localName")%>"><%=(String)m.get("localName")%></option>
-								<%			
-										}
-									}
-								%>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td>
-						<input type="text" name="boardTitle" value="<%=board.getBoardTitle()%>">
-					</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>
-						<textarea rows="3" cols="10" name="boardContent"><%=board.getBoardContent()%></textarea>
-					</td>
-				</tr>
-				<tr>
-					<th>작성인</th>
-					<td><%=board.getMemberId()%></td>
-				</tr>
-				<tr>
-					<th>작성일</th>
-					<td><%=board.getCreatedate().substring(0, 10)%></td>
-				</tr>
-				<tr>
-					<th>수정일</th>
-					<td><%=board.getUpdatedate().substring(0, 10)%></td>
-				</tr>
-			</table>
-			
-			<div class="container p-3 text-center">
-				<button type="submit">수정</button>
+		<div class="cell-content">
+			<!-- 메세지 확인 -->
+			<div class="container p-3">
+				<%
+					String msg = request.getParameter("msg");
+					if(msg != null){
+				%>
+					<%=msg%>
+				<%		
+					}
+				%>
 			</div>
+			<!-- boardList 결과-->	
+			<form action= "<%=request.getContextPath()%>/board/modifyBoardAction.jsp" method="post">
+				<div class="container p-3">
+					<table class="table table-sm">
+						<tr>
+							<th>글번호</th>
+							<td>
+								<input type ="hidden" name="boardNo" value="<%=board.getBoardNo()%>">
+								<%=board.getBoardNo()%>
+							</td>
+						</tr>
+						<tr>
+							<th>작성자</th>
+							<td><%=board.getMemberId()%></td>
+						</tr>
+						<tr>
+							<th>지역명</th>
+							<td>
+								<select name="localName" class="form-control w-25">
+										<%
+											for(HashMap<String, Object> m : localList){
+												if(board.getLocalName().equals((String)m.get("localName"))){		
+										%>
+													<option value="<%=(String)m.get("localName")%>" selected="selected"><%=(String)m.get("localName")%></option>									
+										<%		
+												} else if(!board.getLocalName().equals((String)m.get("localName"))){
+										%>
+													<option value="<%=(String)m.get("localName")%>"><%=(String)m.get("localName")%></option>
+										<%			
+												}
+											}
+										%>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>제목</th>
+							<td>
+								<input type="text" name="boardTitle" value="<%=board.getBoardTitle()%>" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td>
+								<textarea rows="15" name="boardContent" class="form-control"><%=board.getBoardContent()%></textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>작성일</th>
+							<td><%=board.getCreatedate().substring(0, 10)%></td>
+						</tr>
+						<tr>
+							<th>수정일</th>
+							<td><%=board.getUpdatedate().substring(0, 10)%></td>
+						</tr>
+					</table>
+					
+					<div class="btnDiv">
+						<button type="submit" class="btn">수정</button>
+					</div>
+				</div>
+			</form>
 		</div>
-	</form>
+		<div class="cell-footer">
+			<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		</div>
+	</div>
 </body>
 </html>

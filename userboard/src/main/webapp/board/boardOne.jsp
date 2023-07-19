@@ -53,7 +53,7 @@
 	PreparedStatement boardStmt = null;
 	ResultSet boardRs = null;
 	String sql = "SELECT board_no boardNo, local_name localName, board_title boardTitle, board_content boardContent, member_id memberId, createdate, updatedate"
-							+" "+"FROM board WHERE board_no = ?";
+	+" "+"FROM board WHERE board_no = ?";
 	boardStmt = conn.prepareStatement(sql); // (?, 1)
 	boardStmt.setInt(1, boardNo); 
 	System.out.println(boardStmt + "<--boardOne.jsp stmt");
@@ -78,7 +78,7 @@
 	ResultSet commentRs = null;
 	// 쿼리 작성
 	String commentSql = "SELECT comment_no commentNo, board_no boardNo, comment_content commentContent, member_id memberId, createdate, updatedate"
-							+" "+"From comment WHERE board_no = ? limit ?, ?";
+	+" "+"From comment WHERE board_no = ? limit ?, ?";
 	commentStmt = conn.prepareStatement(commentSql);
 	commentStmt.setInt(1, boardNo);
 	commentStmt.setInt(2, startRow);
@@ -128,14 +128,13 @@
 	System.out.println(lastPage+"<-- boardOne.jsp lastPage");
 	
 	/* 페이지 블럭
-	* currentBlock : 현재 페이지 블럭
+	* currentBlock : 현재 페이지 블럭(currentPage / pageLength)
+	* currentPage % pageLength != 0, currentBlock +1
 	* pageLength : 현제 페이지 블럭의 들어갈 페이지 수
-	* totalPage : 총 페이지 개수
-	* totalPage가 0이면 페이지가 없으므로 totalPage = 1페이지로
 	* startPage : 블럭의 시작 페이지 (currentBlock -1) * pageLength +1
 	* endPage : 블럭의 마지막 페이지 startPage + pageLength -1
 	* 맨 마지막 블럭에서는 끝지점에 도달하기 전에 페이지가 끝나기 때문에 아래와 같이 처리 
-	* if(endPage > totalPage){endPage = totalPage;}
+	* if(endPage > lastPage){endPage = lastPage;}
 	*/
 
 	int currentBlock = 0;
@@ -147,181 +146,167 @@
 	}
 	System.out.println(currentBlock+"<--boardOne.jsp currentBlock");
 	
-	int totalPage = 0;
-	if(totalRow % rowPerPage == 0){
-		totalPage = totalRow / rowPerPage;
-			
-		if(totalPage == 0){
-				totalPage = 1;
-		}
-	} else{
-		totalPage = (totalRow / rowPerPage) +1;
-	} 
-	System.out.println(totalPage+"<--boardOne.jsp totalPage");
-	
 	int startPage = (currentBlock -1) * pageLength +1;
 	System.out.println(startPage+"<--boardOne.jsp startPage");
 	
 	int endPage = startPage + pageLength -1;
-	if(endPage > totalPage){
-		endPage = totalPage;
+	if(endPage > lastPage){
+		endPage = lastPage;
 	}
 	System.out.println(endPage+"<--boardOne.jsp endPage");
-
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>boardOne.jsp</title>
-<!-- Latest compiled and minified CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<jsp:include page="/inc/link.jsp"></jsp:include>
 </head>
 <body>
-	<!-- 메인메뉴(가로) -->	
-		<div class="container p-3">
+	<div class="main-container">
+		<!-- 메인메뉴(가로) -->		
+		<div class="cell-header">
 			<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
 		</div>
-	
-	<!-- boardList 모델 출력-->	
-		<div class="container p-3">
-			<table class="table table-sm">
-				<tr>
-					<th>글번호</th>
-					<td><%=board.getBoardNo()%></td>
-				</tr>
-				<tr>
-					<th>지역명</th>
-					<td><%=board.getLocalName()%></td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td><%=board.getBoardTitle()%></td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td><%=board.getBoardContent()%></td>
-				</tr>
-				<tr>
-					<th>작성인</th>
-					<td><%=board.getMemberId()%></td>
-				</tr>
-				<tr>
-					<th>작성일</th>
-					<td><%=board.getCreatedate().substring(0, 10)%></td>
-				</tr>
-				<tr>
-					<th>수정일</th>
-					<td><%=board.getUpdatedate().substring(0, 10)%></td>
-				</tr>
-			</table>
+		<div class="cell-content">
+			<!-- boardList 모델 출력-->
+			<div class="container p-3">
+				<table class="table table-sm">
+					<tr>
+						<th>글번호</th>
+						<td><%=board.getBoardNo()%></td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td><%=board.getMemberId()%></td>
+					</tr>
+					<tr>
+						<th>지역명</th>
+						<td><%=board.getLocalName()%></td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td><%=board.getBoardTitle()%></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><%=board.getBoardContent()%></td>
+					</tr>
+					<tr>
+						<th>작성일</th>
+						<td><%=board.getCreatedate().substring(0, 10)%></td>
+					</tr>
+					<tr>
+						<th>수정일</th>
+						<td><%=board.getUpdatedate().substring(0, 10)%></td>
+					</tr>
+				</table>
+				<%
+					// 작성자와 로그인 id가 일치 할 때 수정, 삭제 가능
+					if(loginMemberId != null && loginMemberId.equals(board.getMemberId())){
+				%>
+					<div class="btnDiv">
+						<a href="<%=request.getContextPath()%>/board/modifyBoard.jsp?boardNo=<%=board.getBoardNo()%>" class="btn updateBtn">수정</a>
+						<a href="<%=request.getContextPath()%>/board/removeBoardAction.jsp?boardNo=<%=board.getBoardNo()%>" class="btn">삭제</a>
+					</div>
+				<%
+					}
+				%>
+			</div>
+			<!-- session 유무에 따른 comment 입력-->
 			<%
-				if(loginMemberId != null && loginMemberId.equals(board.getMemberId())){
+				if(loginMemberId != null){
 			%>
-				<div class="container p-3 text-center">
-					<a href="<%=request.getContextPath()%>/board/modifyBoard.jsp?boardNo=<%=board.getBoardNo()%>">수정</a>
-					<a href="<%=request.getContextPath()%>/board/removeBoardAction.jsp?boardNo=<%=board.getBoardNo()%>">삭제</a>
+				<div>
+					<form action="<%=request.getContextPath()%>/board/addCommentAction.jsp" method="post">
+						<input type="hidden" name="boardNo" value ="<%=board.getBoardNo()%>">
+						<input type="hidden" name="memberId" value ="<%=loginMemberId%>">
+						<div class="container p-3">
+							<label>댓글</label>
+							<textarea name="commentContent" class="form-control"></textarea>
+						</div>
+						<div class="container p-3 btnDiv">
+							<button type="submit" class="btn">등록</button>
+						</div>
+					</form>
 				</div>
-			<%
+			<%	
 				}
 			%>
-		</div>
-	
-	<!-- session 유무에 따른 comment 입력-->
-	<%
-		if(loginMemberId != null){
-	%>
-		<div>
-			<form action="<%=request.getContextPath()%>/board/addCommentAction.jsp" method="post">
-				<input type="hidden" name="boardNo" value ="<%=board.getBoardNo()%>">
-				<input type="hidden" name="memberId" value ="<%=loginMemberId%>">
-				<div class="container p-3">
-					<table class="table table-sm">
-						<tr>
-							<th>commentContent</th>
-							<td>
-								<textarea rows="2" cols="80" name="commentContent"></textarea>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div class="container">
-					<button type="submit">댓글입력</button>
-				</div>
-			</form>
-		</div>
-	<%	
-		}
-	%>
-	<!-- commentList 결과 -->
-	<div class="container p-3">
-		<table class="table table-sm">
-			<tr>
-				<th>commentContent</th>
-				<th>memberId</th>
-				<th>createdate</th>
-				<th>updatedate</th>
-				<th colspan="2">&nbsp;</th>
-			</tr>
-			<%
-				for(Comment c : commentList){
-			%>
-				<tr>
-					<th><%=c.getCommentContent()%></th>
-					<th><%=c.getMemberId()%></th>
-					<th><%=c.getCreatedate().substring(0, 10)%></th>
-					<th><%=c.getUpdatedate().substring(0, 10)%></th>
+			<!-- commentList 결과 -->
+			<div class="container p-3">
+				<table class="table table-sm">
+					<tr>
+						<th>댓글내용</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>수정일</th>
+						<th colspan="2">&nbsp;</th>
+					</tr>
 					<%
-						if(loginMemberId !=null && loginMemberId.equals(c.getMemberId())){
+						for(Comment c : commentList){
 					%>
-						<th>
-							<a href="<%=request.getContextPath()%>/board/modifyComment.jsp?boardNo=<%=boardNo%>&commentNo=<%=c.getCommentNo()%>">수정</a>
-						</th>
-						<th>
-							<a href="<%=request.getContextPath()%>/board/removeCommentAction.jsp?boardNo=<%=boardNo%>&commentNo=<%=c.getCommentNo()%>">삭제</a>
-						</th>
-					<%
+						<tr>
+							<th><%=c.getCommentContent()%></th>
+							<th><%=c.getMemberId()%></th>
+							<th><%=c.getCreatedate().substring(0, 10)%></th>
+							<th><%=c.getUpdatedate().substring(0, 10)%></th>
+							<%
+								if(loginMemberId !=null && loginMemberId.equals(c.getMemberId())){
+							%>
+								<th class="text-right">
+									<a href="<%=request.getContextPath()%>/board/modifyComment.jsp?boardNo=<%=boardNo%>&commentNo=<%=c.getCommentNo()%>" class="btn">수정</a>
+									<a href="<%=request.getContextPath()%>/board/removeCommentAction.jsp?boardNo=<%=boardNo%>&commentNo=<%=c.getCommentNo()%>" class="btn">삭제</a>
+								</th>
+							<%
+								}
+							%>
+						</tr>
+					<%		
 						}
 					%>
-				</tr>
-			<%		
-				}
-			%>
-		</table>
-	</div>
-	<!-- commentList 네비게이션 -->
-	<div class="container text-center">
-		<ul>
-			<%
-					if(startPage > 1){
-			%>
-					<li>
-						<a href ="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=startPage-pageLength%>">이전</a>
-					</li>
-			<%		
-					}
-					for(int i = startPage; i <= endPage; i++){
-			%>
-					<li>
-						<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=i%>&boardNo=<%=boardNo%>"><%=i%></a>
-					</li>
-			<%			
-					}
-					if(endPage != lastPage){
-			%>
-						<li>
-							<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=startPage+pageLength%>">다음</a>
-						</li>	
-			<%			
-					}
-			%>
-		</ul>
-	</div>
-	<div class="container p-3 text-center">
-		<jsp:include page="/inc/copyright.jsp"></jsp:include>
-	</div>
+				</table>
+			</div>
+			<!-- commentList 네비게이션 -->
+			<div class="pageNav">
+				<ul class="list-group list-group-horizontal">
+					<%
+						if(startPage > 1){
+					%>
+							<li class="list-group-item pageNavLi" onclick="location.href='<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=startPage-pageLength%>&boardNo=<%=boardNo%>'">
+								<span>이전</span>
+							</li>
+					<%		
+						}
+							for(int i = startPage; i <= endPage; i++){
+								if(i == currentPage){
+					%>
+									<li class="list-group-item currentPageNav">
+										<span><%=i%></span>
+									</li>
+					<%
+								} else{
+					%>
+							<li class="list-group-item pageNavLi" onclick="location.href='<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=i%>&boardNo=<%=boardNo%>'">
+								<span><%=i%></span>
+							</li>
+					<%			
+							}
+						}
+							if(endPage != lastPage){
+					%>
+								<li class="list-group-item pageNavLi" onclick="location.href='<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=startPage+pageLength%>&boardNo=<%=boardNo%>'">
+									<span>다음</span>
+								</li>	
+					<%			
+							}
+					%>
+				</ul>
+			</div>
+		</div>	
+		<div class="cell-footer">
+			<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		</div>
+	</div>	
 </body>
 </html>

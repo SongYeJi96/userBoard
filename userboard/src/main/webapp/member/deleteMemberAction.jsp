@@ -2,6 +2,7 @@
 <%@ page import="java.sql.*"%>
 <%@page import="java.net.*"%>
 <%
+
 	// request 인코딩
 	request.setCharacterEncoding("utf-8");
 	

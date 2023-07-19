@@ -15,7 +15,7 @@
 	// 요청값 유효성 검사(boardNo, commentNo)
 	if(request.getParameter("boardNo") == null
 		|| request.getParameter("boardNo").equals("")){
-			response.sendRedirect(request.getContextPath()+"/home.jsp");		
+	response.sendRedirect(request.getContextPath()+"/home.jsp");		
 	}
 	// 값 저장(boardNo)
 	String boardNo = request.getParameter("boardNo");
@@ -23,7 +23,7 @@
 		
 	if(request.getParameter("commentNo") == null
 		|| request.getParameter("commentNo").equals("")){
-			response.sendRedirect(request.getContextPath()+"/board/boardNo.jsp?boardNo="+boardNo);		
+	response.sendRedirect(request.getContextPath()+"/board/boardNo.jsp?boardNo="+boardNo);		
 	}
 	// 값 저장(commentdNo)
 	String commentNo = request.getParameter("commentNo");

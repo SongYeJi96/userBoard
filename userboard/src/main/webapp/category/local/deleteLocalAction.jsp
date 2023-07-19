@@ -18,7 +18,7 @@
 	// 요청값 유효성 검사(localName)
 	if(request.getParameter("localName") == null
 		|| request.getParameter("localName").equals("")){
-			response.sendRedirect(request.getContextPath()+"category/local/localList.jsp");
+	response.sendRedirect(request.getContextPath()+"category/local/localList.jsp");
 	}
 	// 값 저장(localName)
 	String localName = request.getParameter("localName");

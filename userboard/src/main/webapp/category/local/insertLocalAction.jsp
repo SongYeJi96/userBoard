@@ -18,9 +18,9 @@
 	// 요청값 유효성 검사(newLocalName)
 	if(request.getParameter("newLocalName") == null
 		|| request.getParameter("newLocalName").equals("")){
-			String msg = URLEncoder.encode("카테고리명이 입력되지 않았습니다", "utf-8");
-			response.sendRedirect(request.getContextPath()+"/category/local/insertLocalForm.jsp?msg="+msg);
-			return;
+	String msg = URLEncoder.encode("카테고리명이 입력되지 않았습니다", "utf-8");
+	response.sendRedirect(request.getContextPath()+"/category/local/insertLocalForm.jsp?msg="+msg);
+	return;
 	}
 	// 값 저장(newLocalName)
 	String newLocalName = request.getParameter("newLocalName");

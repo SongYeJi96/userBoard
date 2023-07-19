@@ -18,10 +18,10 @@
 	String msg = null;
 	if(request.getParameter("memberId") == null
 		|| request.getParameter("memberId").equals("")){
-			msg ="Id가 입력되지 않았습니다.";
+	msg ="Id가 입력되지 않았습니다.";
 	} else if(request.getParameter("memberPw") == null
 		|| request.getParameter("memberPw").equals("")){
-			msg ="Password가 입력되지 않았습니다.";
+	msg ="Password가 입력되지 않았습니다.";
 	}
 	
 	if(msg != null) {

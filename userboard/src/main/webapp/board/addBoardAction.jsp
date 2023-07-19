@@ -24,13 +24,13 @@
 	String msg = null;
 	if(request.getParameter("localName") == null
 		|| request.getParameter("localName").equals("")){
-			msg = "지역명이 선택되지 않았습니다";
+	msg = "지역명이 선택되지 않았습니다";
 	} else if(request.getParameter("boardTitle") == null
 		|| request.getParameter("boardTitle").equals("")){
-			msg = "제목이 입력되지 않았습니다";
+	msg = "제목이 입력되지 않았습니다";
 	} else if(request.getParameter("boardContent") == null
 		|| request.getParameter("boardContent").equals("")){
-			msg = "내용이 입력되지 않았습니다.";
+	msg = "내용이 입력되지 않았습니다.";
 	}
 	if(msg != null) {
     	String rmsg =  URLEncoder.encode(msg,"utf-8");
@@ -59,7 +59,7 @@
 	
 	// addBoard
 	String addBoardSql = "INSERT INTO board(local_name, board_title, board_content, member_id, createdate, updatedate)" 
-							+" "+"VALUES(?, ?, ?, ?, NOW(), NOW())";
+	+" "+"VALUES(?, ?, ?, ?, NOW(), NOW())";
 	PreparedStatement addBoardStmt = null;
 	addBoardStmt = conn.prepareStatement(addBoardSql); //(?,1=4)
 	addBoardStmt.setString(1, localName);

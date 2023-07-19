@@ -32,7 +32,7 @@
 	// HashMap localList(모델데이터)
 		ArrayList<HashMap<String,Object>> localList = new ArrayList<HashMap<String,Object>>();
 		while(rs.next()){
-			 HashMap<String, Object> m = new HashMap<String, Object>();
+	 HashMap<String, Object> m = new HashMap<String, Object>();
 	         m.put("localName", rs.getString("localName"));
 	         localList.add(m);
 		}
@@ -42,65 +42,63 @@
 <head>
 <meta charset="UTF-8">
 <title>insertLocalForm.jsp</title>
-<!-- Latest compiled and minified CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<jsp:include page="/inc/link.jsp"></jsp:include>
 </head>
 <body>
-	<!-- 메인메뉴(가로) -->	
-	<div>
-		<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
-	</div>
-	
-	<!-- 메세지 확인 -->
-	<div>
-		<%
-			String msg = request.getParameter("msg");
-			if(msg != null){
-		%>
-			<%=msg%>
-		<%		
-			}
-		%>
-	</div>
-	
-	<!-- local category 추가 -->
-	<form action="<%=request.getContextPath()%>/category/local/insertLocalAction.jsp">
-		<div>
-			<input type = "text" name="newLocalName">
-			<button type="submit">카테고리 등록</button>
-			<button type="button" onclick="location.href='<%=request.getContextPath()%>/category/local/localList.jsp'">취소</button>
+	<div class="main-container">
+		<div class="cell-header">
+			<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
 		</div>
-	</form>
-	<!-- local categoryList 모델 출력 -->
-	<div>
-		<table>
-			<tr>
-				<th>지역명</th>
-				<th>수정</th>
-				<th>삭제</th>
-			</tr>
-			<%
-				for(HashMap<String, Object> m : localList){
-			%>
-				<tr>
-					<td><%=(String)m.get("localName")%></td>
-					<th>
-						<a href ="<%=request.getContextPath()%>/category/local/updateLocalForm.jsp?localName=<%=(String)m.get("localName")%>">수정</a>
-					</th>
-					<th>
-						<a href ="<%=request.getContextPath()%>/category/local/deleteLocalAction.jsp?localName=<%=(String)m.get("localName")%>">삭제</a>
-					</th>
-				</tr>
-			<%
-				}
-			%>
-		</table>
-	</div>
-	<div>
-		<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		<div class="cell-content">
+			<!-- 메세지 확인 -->
+			<div class="container p-3">
+				<%
+					String msg = request.getParameter("msg");
+					if(msg != null){
+				%>
+					<%=msg%>
+				<%		
+					}
+				%>
+			</div>
+			<!-- local category 추가 -->
+			<form action="<%=request.getContextPath()%>/category/local/insertLocalAction.jsp">
+				<div class="container p-3 addLocalDiv">
+					<input type = "text" name="newLocalName" class="addLocalIn form-control w-25">
+					<button type="submit" class="btn addLocalBtn">등록</button>
+					<button type="button" onclick="location.href='<%=request.getContextPath()%>/category/local/localList.jsp'" class="btn">취소</button>
+				</div>
+			</form>
+			<!-- local categoryList 모델 출력 -->
+			<div class="container p-3">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>지역명</th>
+							<th colspan="2">&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+					<%
+						for(HashMap<String, Object> m : localList){
+					%>
+						<tr>
+							<td><%=(String)m.get("localName")%></td>
+							<th class="text-right">
+								<a href ="<%=request.getContextPath()%>/category/local/updateLocalForm.jsp?localName=<%=(String)m.get("localName")%>" class="btn">수정</a>
+								<a href ="<%=request.getContextPath()%>/category/local/deleteLocalAction.jsp?localName=<%=(String)m.get("localName")%>" class="btn">삭제</a>
+							</th>
+						</tr>
+					<%
+						}
+					%>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="cell-footer">
+			<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		</div>
 	</div>
 </body>
 </html>

@@ -41,51 +41,54 @@
 		member.setMemberPw(rs.getString("memberPw"));
 		member.setCreatedate(rs.getString("createdate"));
 		member.setUpdatedate(rs.getString("updatedate"));
-	}	
-	
+	}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>memberInformation.jsp</title>
+<jsp:include page="/inc/link.jsp"></jsp:include>
 </head>
 <body>
-	<!-- 메인메뉴(가로) -->	
-	<div>
-		<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
-	</div>
-	
-	<!-- member 모델 출력-->
-	<div>
-		<table>
-			<tr>
-				<td>ID</td>
-				<td>
-					<input type="text" name="memberId" value="<%=member.getMemberId()%>" readonly="readonly">
-				</td>
-			</tr>
-			<tr>
-				<td>가입일</td>
-				<td>
-					<input type="text" value="<%=member.getCreatedate().substring(0,10)%>">
-				</td>
-			</tr>
-			<tr>
-				<td>정보 수정일</td>
-				<td>
-					<input type="text" value="<%=member.getUpdatedate().substring(0,10)%>">
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div>
-		<a href = "<%=request.getContextPath()%>/member/updateMemberForm.jsp">비밀번호변경</a>
-		<a href = "<%=request.getContextPath()%>/member/deleteMemberForm.jsp">회원탈퇴</a>
-	</div>
-	
-	<div>
-		<jsp:include page="/inc/copyright.jsp"></jsp:include>
+	<div class="main-container">
+		<!-- 메인메뉴(가로) -->		
+		<div class="cell-header">
+			<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
+		</div>
+		<div class="cell-content">
+			<!-- member 모델 출력-->
+			<h4 class="container p-3">회원정보</h4>
+			<div class="container p-3">
+				<table class="table table-sm">
+					<tr>
+						<td>아이디</td>
+						<td>
+							<%=member.getMemberId()%>
+						</td>
+					</tr>
+					<tr>
+						<td>가입일</td>
+						<td>
+							<%=member.getCreatedate().substring(0,10)%>
+						</td>
+					</tr>
+					<tr>
+						<td>정보 수정일</td>
+						<td>
+							<%=member.getUpdatedate().substring(0,10)%>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="container p-3 text-right">
+				<a href = "<%=request.getContextPath()%>/member/updateMemberForm.jsp" class="btn">비밀번호변경</a>
+				<a href = "<%=request.getContextPath()%>/member/deleteMemberForm.jsp" class="btn">회원탈퇴</a>
+			</div>
+		</div>
+		<div class="cell-footer">
+			<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		</div>
 	</div>
 </body>
 </html>

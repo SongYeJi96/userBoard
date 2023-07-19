@@ -17,57 +17,60 @@
 <head>
 <meta charset="UTF-8">
 <title>updateMemberForm.jsp</title>
+<jsp:include page="/inc/link.jsp"></jsp:include>
 </head>
 <body>
-	<!-- 메인메뉴(가로) -->	
-	<div>
-		<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
-	</div>
-	
-	<!-- 메세지 확인 -->
-	<div>
-		<%
-			String msg = request.getParameter("msg");
-			if(msg != null){
-		%>
-			<%=msg%>
-		<%		
-			}
-		%>
-	</div>
-	
-	<!-- 정보 수정 폼 -->
-	<form action="<%=request.getContextPath()%>/member/updateMemberAction.jsp" method="post">
-		<div>
-			<table>
-				<tr>
-					<td>ID</td>
-					<td>
-						<input type="text" name="memberId" value="<%=memberId%>" readonly="readonly">
-					</td>
-				</tr>
-				<tr>
-					<td>NewPassword</td>
-					<td>
-						<input type="password" name="changeMemberPw">
-					</td>
-				</tr>
-				<tr>
-					<td>Password Check</td>
-					<td>
-						<input type="password" name="memberPwCheck">
-					</td>
-				</tr>
-			</table>
-			
-			<div>
-				<button type="submit">비밀번호변경</button>
-			</div>
+	<div class="main-container">
+		<!-- 메인메뉴(가로) -->		
+		<div class="cell-header">
+			<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
 		</div>
-	</form>
-	
-	<div>
-		<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		<div class="cell-content">
+			<!-- 메세지 확인 -->
+			<div class="container p-3">
+				<%
+					String msg = request.getParameter("msg");
+					if(msg != null){
+				%>
+					<%=msg%>
+				<%		
+					}
+				%>
+			</div>
+			<!-- 정보 수정 폼 -->
+			<h4 class="container p-3">비밀번호 변경</h4>
+			<form action="<%=request.getContextPath()%>/member/updateMemberAction.jsp" method="post">
+				<div class="container p-3">
+					<table class="table table-sm">
+						<tr>
+							<td>아이디</td>
+							<td>
+								<%=memberId%>
+							</td>
+						</tr>
+						<tr>
+							<td>새로운 비밀번호</td>
+							<td>
+								<input type="password" name="changeMemberPw" class="form-control w-25">
+							</td>
+						</tr>
+						<tr>
+							<td>비밀번호 확인</td>
+							<td>
+								<input type="password" name="memberPwCheck" class="form-control w-25">
+							</td>
+						</tr>
+					</table>
+					
+					<div class="container p-3 text-right">
+						<button type="submit" class="btn">확인</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="cell-footer">
+			<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		</div>
 	</div>
 </body>
 </html>

@@ -11,9 +11,9 @@
 			if(session.getAttribute("loginMemberId") == null){ // 로그인전
 		%>
 				<div>
-					<ul class="list-group list-group-horizontal">
-						<li class="list-group-item sign_in" onclick="location.href='<%=request.getContextPath()%>/member/login.jsp'">로그인</li>
-						<li class="list-group-item sign_up" onclick="location.href='<%=request.getContextPath()%>/member/insertMemberForm.jsp'">회원가입</li>
+					<ul class="list-group list-group-horizontal menuList">
+						<li class="list-group-item sign_in_li" onclick="location.href='<%=request.getContextPath()%>/member/login.jsp'">로그인</li>
+						<li class="list-group-item sign_up_li" onclick="location.href='<%=request.getContextPath()%>/member/insertMemberForm.jsp'">회원가입</li>
 					</ul>
 				</div>
 				
@@ -22,8 +22,8 @@
 					String memberId = (String)(session.getAttribute("loginMemberId"));
 		%>
 					<div class="dropdown">
-					    <button type="button" class="btn dropdown user" data-bs-toggle="dropdown"><i class='fas fa-user-circle iheader'></i></button>
-					    <ul class="dropdown-menu">
+					    <button type="button" class="user" data-bs-toggle="dropdown"><i class='fas fa-user-circle iheader'></i></button>
+					    <ul class="dropdown-menu menuList">
 					      <li class="dropdown-header"><%=memberId%>님</li>
 					      <li class="dropdown-item" onclick="location.href='<%=request.getContextPath()%>/member/memberInformation.jsp'">회원정보</li>
 					      <li class="dropdown-item" onclick="location.href='<%=request.getContextPath()%>/member/logoutAction.jsp'">로그아웃</li>

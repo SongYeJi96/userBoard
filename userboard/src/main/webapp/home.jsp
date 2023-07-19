@@ -38,8 +38,8 @@
 	* UNION ALL select한 결과 결합
 	*/
 	String subMenuSql = "SELECT '전체' localName, COUNT(local_name) cnt FROM board"
-						+" "+"UNION ALL SELECT local_name, COUNT(local_name) FROM board GROUP BY local_name"
-						+" "+"UNION ALL SELECT local_name, 0 cnt FROM local WHERE local_name NOT IN (SELECT local_name FROM board)";
+		+" "+"UNION ALL SELECT local_name, COUNT(local_name) FROM board GROUP BY local_name"
+		+" "+"UNION ALL SELECT local_name, 0 cnt FROM local WHERE local_name NOT IN (SELECT local_name FROM board)";
 	subMenuStmt = conn.prepareStatement(subMenuSql);
 	System.out.println(subMenuStmt +"home.jsp subMenuStmt");
 	subMenuRs = subMenuStmt.executeQuery();
@@ -76,13 +76,13 @@
 	String localNameSql = null;
 	if(localName.equals("전체")){
 		localNameSql = "SELECT board_no boardNo, local_name localName, board_title boardTitle, createdate"
-							+" "+"FROM board ORDER BY createdate DESC limit ?, ?";
+			+" "+"FROM board ORDER BY createdate DESC limit ?, ?";
 		localNameStmt = conn.prepareStatement(localNameSql); //(?, 1-2)
 		localNameStmt.setInt(1, startRow);
 		localNameStmt.setInt(2, rowPerPage);
 	} else{
 		localNameSql = "SELECT board_no boardNo, local_name localName, board_title boardTitle, createdate"
-							+" "+"FROM board where local_name = ? ORDER BY createdate DESC limit ?, ?";
+			+" "+"FROM board where local_name = ? ORDER BY createdate DESC limit ?, ?";
 		localNameStmt = conn.prepareStatement(localNameSql); //(?, 1-3)
 		localNameStmt.setString(1, localName);
 		localNameStmt.setInt(2, startRow);
@@ -138,14 +138,13 @@
 	System.out.println(lastPage+"<-- home.jsp lastPage");
 	
 	/* 페이지 블럭
-	* currentBlock : 현재 페이지 블럭
+	* currentBlock : 현재 페이지 블럭(currentPage / pageLength)
+	* currentPage % pageLength != 0, currentBlock +1
 	* pageLength : 현제 페이지 블럭의 들어갈 페이지 수
-	* totalPage : 총 페이지 개수
-	* totalPage가 0이면 페이지가 없으므로 totalPage = 1페이지로
 	* startPage : 블럭의 시작 페이지 (currentBlock -1) * pageLength +1
 	* endPage : 블럭의 마지막 페이지 startPage + pageLength -1
 	* 맨 마지막 블럭에서는 끝지점에 도달하기 전에 페이지가 끝나기 때문에 아래와 같이 처리 
-	* if(endPage > totalPage){endPage = totalPage;}
+	* if(endPage > lastPage){endPage = lastPage;}
 	*/
 
 	int currentBlock = 0;
@@ -157,24 +156,13 @@
 	}
 	System.out.println(currentBlock+"<--home.jsp currentBlock");
 	
-	int totalPage = 0;
-	if(totalRow % rowPerPage == 0){
-		totalPage = totalRow / rowPerPage;
-			
-		if(totalPage == 0){
-				totalPage = 1;
-		}
-	} else{
-		totalPage = (totalRow / rowPerPage) +1;
-	} 
-	System.out.println(totalPage+"<--home.jsp totalPage");
 	
 	int startPage = (currentBlock -1) * pageLength +1;
 	System.out.println(startPage+"<--home.jsp startPage");
 	
 	int endPage = startPage + pageLength -1;
-	if(endPage > totalPage){
-		endPage = totalPage;
+	if(endPage > lastPage){
+		endPage = lastPage;
 	}
 	System.out.println(endPage+"<--home.jsp endPage");
 %>
@@ -183,112 +171,7 @@
 <head>
 <meta charset="UTF-8">
 <title>home.jsp</title>
-<!-- Latest compiled and minified CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/ba8d291cc0.js" crossorigin="anonymous"></script>
-<style>
-	*{
-		margin :0;
-		padding :0;
-	}
-	.container{
-		height: 100%;
-		margin: 0;
-		padding: 0;
-		display: grid;
-		grid-template : 70px 1fr 100px / 250px 1fr;
-		grid-gap: 0px;
-		min-height: 100vh;
-		min-width: 100%;
-	}
-	.cell-header{
-		display: flex;
-		padding: 30px;
-		grid-column: 1 / 3;
-		border-bottom: solid 5px #F6F6F6;
-		justify-content: space-between; 
-		align-items: center; 	
-	}
-	.cell-content{
-		margin: 50px;
-	}
-	.cell-aside{
-		border-right: solid 5px #F6F6F6;
-	}
-	.cell-footer{
-		display: flex;
-		grid-column: 1 / 3;
-		background-color: #191919;
-		color: #FFFFFF;
-		justify-content: center;
-		align-items: center; 	
-	}
-	a{
-		text-decoration: none;
-		color: #000000;
-	}
-	a.btn{
-	    background-color:#191919;
-	    color:#FFFFFF;
-    }
-	.icategory{
-		font-size: 15px;
-	}
-	.addBoard{
-		display: flex;
-		margin: 30px;
-		justify-content: flex-end;
-		align-items: center;
-	}
-	.localLsit{
-		display: flex;
-		margin: 30px;
-		justify-content: center;
-		align-items: center; 
-	}
-	.pageNav{
-		display: flex;
-		margin: 30px;
-		justify-content: center;
-		align-items: center;
-	}
-	.pageNavLi:hover{
-		background-color: #000042;
-		color: #FFFFFF;
-    	cursor: pointer;
-	}
-	.currentPageNav{
-		background-color: #000042;
-		color: #FFFFFF;
-	}
-	.sign_in:hover, .sign_up:hover {
-		background-color: #191919;
-		color: #FFFFFF;
-    	cursor: pointer;
-	}
-	.homeI{
-		font-size: 30px;
-	}
-	.homeI:hover{
-		cursor: pointer;
-	}
-	.user{
-		font-size: 30px;
-	}
-	.localList_thead{
-		background-color: #000042;
-		color:#FFFFFF;
-	}
-	.localList_tbody{
-		cursor: pointer;
-	}
-	.titleTd:hover{
-		color: #0100FF;
-	}	
-</style>
+<jsp:include page="/inc/link.jsp"></jsp:include>
 </head>
 <body>
 	<!-- 모든 페이지 마다 같은 내용이 있을 때 include 페이지 -->
@@ -299,7 +182,7 @@
 	* 내부에서 합치기 때문에 request.getcontextPath()는 붙이지 않는다
 	-->
 	<!-- 메인메뉴(가로) -->	
-	<div class="container">
+	<div class="home-container">
 		<div class="cell-header">
 			<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
 		</div>
@@ -310,7 +193,7 @@
 				 <ul class="list-group list-group-flush">
 				 	<li class="list-group-item">
 				 		<div>
-					 		<h4>Category
+					 		<h4>카테고리
 					 			<!-- session 유무, 관리자 로그인에 따른 카테고리 관리 -->
 								<%
 									if(loginMemberId != null && loginMemberId.equals("admin")){
@@ -327,7 +210,7 @@
 			         <%
 			            for(HashMap<String, Object> m : subMenuList) {
 			         %>
-			               <li class="list-group-item list-group-item-action">
+			               <li class="list-group-item list-group-item-action cateList">
 			                  <a href="<%=request.getContextPath()%>/home.jsp?localName=<%=(String)m.get("localName")%>">
 			                     <%=(String)m.get("localName")%>(<%=(Integer)m.get("cnt")%>)
 			                  </a>
@@ -340,36 +223,38 @@
 		
 		<div class="cell-content">
 			<!-- localNameList 모델 출력 -->
-			<div class="localLsit">
+			<div class="localLsitDiv">
 				<table class="table">
-					<thead class="localList_thead">
+					<thead>
 						<tr>
 							<th>지역명</th>
 							<th>제목</th>
 							<th>작성일</th>
 						</tr>
 					</thead>
+					<tbody>
 						<%
 							for(Board b : localNameList){
 						%>
-							<tbody class="localList_tbody">
-								<tr onclick="location.href='<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.getBoardNo()%>'">
+							
+								<tr class="localListTr" onclick="location.href='<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.getBoardNo()%>'">
 									<td><%=b.getLocalName()%></td>
 									<td class="titleTd"><%=b.getBoardTitle()%></td>
 									<td><%=b.getCreatedate().substring(0, 10)%></td>
 								</tr>
-							</tbody>
+							
 						<%		
 							}
 						%>
+					</tbody>
 				</table>
 			</div>
 			<!-- session 유무에 따른 글 등록 -->
 			<%
 				if(loginMemberId != null){
 			%>
-				<div class="addBoard">
-					<a href="<%=request.getContextPath()%>/board/addBoard.jsp" class="btn">글 등록</a>
+				<div class="addBtnDiv">
+					<a href="<%=request.getContextPath()%>/board/addBoard.jsp" class="btn">글 작성</a>
 				</div>
 			<%
 				}

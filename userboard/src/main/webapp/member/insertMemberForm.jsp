@@ -14,56 +14,58 @@
 <head>
 <meta charset="UTF-8">
 <title>insertMemberForm.jsp</title>
-<!-- Latest compiled and minified CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/ba8d291cc0.js" crossorigin="anonymous"></script>
+<jsp:include page="/inc/link.jsp"></jsp:include>
 </head>
 <body>
-	<!-- 메인메뉴(가로) -->
-	<div>
-		<i class='fas fa-home iheader homeI' onclick="location.href='<%=request.getContextPath()%>/home.jsp'"></i>
-	</div>
-	
-	<!-- 메세지 확인 -->
-	<div>
-		<%
-			String msg = request.getParameter("msg");
-			if(msg != null){
-		%>
-			<%=msg%>
-		<%		
-			}
-		%>
-	</div>
-	
-	<!-- 회원가입 폼 -->
-	<h4>회원가입</h4>
-	<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post">
-		<table>
-			<tr>
-				<td>
-					<label for="memberId">ID</label>
-				</td>
-				<td>
-					<input type="text" name="memberId" id="memberId">
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="memberPw">Password</label>
-				</td>
-				<td>
-					<input type="password" name="memberPw" id="memberPw">
-				</td>
-			</tr>
-		</table>
-		<button type="submit">회원가입</button>
-	</form>
-	<div>
-		<jsp:include page="/inc/copyright.jsp"></jsp:include>
+	<div class="main-container">
+		<!-- 메인메뉴 -->
+		<div class="signUp-cell-header">
+			<i class='fas fa-home iheader homeI' onclick="location.href='<%=request.getContextPath()%>/home.jsp'"></i>
+		</div>
+		<div  class="signUp-cell-content">
+			<!-- 메세지 확인 -->
+			<div>
+				<%
+					String msg = request.getParameter("msg");
+					if(msg != null){
+				%>
+					<%=msg%>
+				<%		
+					}
+				%>
+			</div>
+			
+			<!-- 회원가입 폼 -->
+			<h4>회원가입</h4>
+			<div class="sign_up_form">	
+				<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post">
+					<div class="sign_up_div">
+						<div class=sign_up_id>
+							<div class="text-left">
+								<label for="memberId">아이디</label>
+							</div>
+							<div>
+								<input type="text" name="memberId" id="memberId" class="memberId">
+							</div>
+						</div>
+						<div class="sign_up_pw">
+							<div class="text-left">
+								<label for="memberPw">비밀번호</label>
+							</div>
+							<div>
+								<input type="password" name="memberPw" id="memberPw" class="memberPw">
+							</div>
+						</div>
+						<div class="sign_up_btn_div">	
+							<button type="submit" class="sign_up_btn">회원가입</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="cell-footer">
+			<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		</div>
 	</div>
 </body>
 </html>

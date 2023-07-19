@@ -22,9 +22,9 @@
 	// 요청값 유효성 검사(changeLocalName)
 	if(request.getParameter("changeLocalName") == null
 		|| request.getParameter("changeLocalName").equals("")){
-			String msg =  URLEncoder.encode("카테고리명이 입력되지 않았습니다","utf-8");
-			response.sendRedirect(request.getContextPath()+"/category/local/updateLocalForm.jsp?localName="+localName+"&msg="+msg);
-			return;
+	String msg =  URLEncoder.encode("카테고리명이 입력되지 않았습니다","utf-8");
+	response.sendRedirect(request.getContextPath()+"/category/local/updateLocalForm.jsp?localName="+localName+"&msg="+msg);
+	return;
 	}
 	
 	// 값 저장(changeLocalName)
