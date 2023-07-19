@@ -1,0 +1,223 @@
+@charset "UTF-8";
+	/* 페이지 구조 */
+	*{
+		margin :0;
+		padding :0;
+	}
+	.home-container{
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template : 70px 1fr 100px / 250px 1fr;
+		grid-gap: 0px;
+		min-height: 100vh;
+		min-width: 100%;
+	}
+	.main-container{
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template : 70px 1fr 100px / 1fr;
+		grid-gap: 0px;
+		min-height: 100vh;
+		min-width: 100%;
+	}
+	.cell-header{
+		display: flex;
+		padding: 30px;
+		grid-column: 1 / 3;
+		border-bottom: solid 5px #F6F6F6;
+		justify-content: space-between; 
+		align-items: center; 	
+	}
+	.cell-content{
+		margin: 50px;
+	}
+	.cell-aside{
+		border-right: solid 5px #F6F6F6;
+	}
+	.cell-footer{
+		display: flex;
+		grid-column: 1 / 3;
+		background-color: #191919;
+		color: #FFFFFF;
+		justify-content: center;
+		align-items: center; 	
+	}
+	.signIn-cell-header, .signUp-cell-header{
+		display: flex;
+		padding: 30px;
+		grid-column: 1 / 3;
+		justify-content: center; 
+		align-items: center; 	
+	}
+	.signIn-cell-content, .signUp-cell-content{
+		display: inline;
+		padding: 30px;
+		grid-column: 1 / 3;
+		text-align: center;
+	}
+	/* 태그 */
+	a{
+		text-decoration: none;
+		color: #000000;
+	}
+	
+	/* 버튼 */
+	.btn{
+	    background-color:#191919;
+	    color:#FFFFFF;
+	 }
+   .addBtnDiv{
+		display: flex;
+		margin: 30px;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	.updateBtn{
+    	margin-right : 5px;
+    }
+	.btnDiv{
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	.addLocalBtn{
+		margin-right: 5px; 
+	}
+	
+	/* aside 카테고리 리스트 */
+	.icategory{
+		font-size: 15px;
+	}
+	.cateList{
+		cursor: pointer;
+	}
+	
+	/* 테이블 */
+	thead{
+		background-color: #000042;
+		color:#FFFFFF;
+	}
+	.localLsitDiv{
+		display: flex;
+		margin: 30px;
+		justify-content: center;
+		align-items: center; 
+	}
+	.localListTr{
+		cursor: pointer;
+	}
+	.titleTd:hover{
+		color: #0100FF;
+	}
+	
+	/* 페이지 네비게이션 */
+	.pageNav{
+		display: flex;
+		margin: 30px;
+		justify-content: center;
+		align-items: center;
+	}
+	.pageNavLi:hover{
+		background-color: #000042;
+		color: #FFFFFF;
+	   	cursor: pointer;
+	}
+	.currentPageNav{
+		background-color: #000042;
+		color: #FFFFFF;
+	}
+	
+	/* header 메인메뉴*/
+	.sign_in_li:hover, .sign_up_li:hover {
+		background-color: #191919;
+		color: #FFFFFF;
+	   	cursor: pointer;
+	}
+	.homeI{
+		font-size: 30px;
+	}
+	.homeI:hover{
+		cursor: pointer;
+	}
+	.user{
+		font-size: 30px;
+		border-style: none;
+		background-color: #FFFFFF; 
+	}
+	.menuList{
+		cursor: pointer;
+	}
+	/* 정렬 */
+	.text-right{
+		text-align: right;
+	}
+	.text-left{
+		text-align: left;
+	}
+	.text-center{
+		text-align: center;
+	}
+	.addLocalDiv {
+		display: flex;
+		justify-content: flex-end;
+	}
+	.addLocalIn {
+		margin-right: 5px;
+	}
+	
+	/*로그인, 회원가입*/
+	.sign_in_form, .sign_up_form{
+		display:flex;
+		padding: 20px;
+		justify-content: center;
+	}
+	.sign_in, .sign_up_div{
+		padding: 20px;
+		border: solid 2px #191919;
+		border-radius: 10px;
+		padding-top: 30px;
+		padding-bottom: 30px;
+		width: 400px;	
+	}
+	.sign_in_id, .sign_up_id{
+		padding-top: 10px;
+	}
+	.sign_in_pw, .sign_up_pw{
+		padding-top: 30px;
+	}
+	.sign_in_btn_div, .sign_up_btn_div{
+		display: flex;
+		justify-content: center;
+		padding-top: 30px;
+	}
+	.memberId, .memberPw{
+		width: 100%;
+		height: 40px;
+		border-radius: 5px;
+	}
+	.sign_in_btn, .sign_up_btn{
+		border-radius: 5px;
+		background-color: #000042;
+		color:#FFFFFF;
+		width: 100%;
+		height: 40px;
+	}
+	.sign_in_btn:hover, .sign_up_btn:hover{
+		background-color: #000030;
+	}
+	.sign_up{
+		padding: 20px;
+		margin-top: 20px;
+		border: solid 2px #191919;
+		border-radius: 10px;
+		text-align: center;
+	}
+	.sign_up_a{
+		text-decoration: none;
+		color: #0100FF;
+	}
+	
