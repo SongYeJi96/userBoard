@@ -18,49 +18,52 @@
 <head>
 <meta charset="UTF-8">
 <title>deleteMemberForm.jsp</title>
+<jsp:include page="/inc/link.jsp"></jsp:include>
 </head>
 <body>
 	<!-- 메인메뉴(가로) -->	
-	<div>
-		<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
-	</div>
-	
-	<!-- 메세지 확인 -->
-	<div>
-		<%
-			String msg = request.getParameter("msg");
-			if(msg != null){
-		%>
-			<%=msg%>
-		<%		
-			}
-		%>
-	</div>
-	<!-- 삭제 폼 -->
-	<form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
-		<div>
-			<table>
-				<tr>
-					<td>ID</td>
-					<td>
-						<input type="text" name="memberId" value="<%=memberId%>" readonly="readonly">
-					</td>
-				</tr>
-				<tr>
-					<td>Password</td>
-					<td>
-						<input type="password" name="memberPw">
-					</td>
-				</tr>
-			</table>
-			
+	<div class="main-container">
+		<div class="cell-header">
+			<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
+		</div>
+		<div class="signIn-cell-content">
+			<!-- 메세지 확인 -->
 			<div>
-				<button type="submit">회원탈퇴</button>
+				<%
+					String msg = request.getParameter("msg");
+					if(msg != null){
+				%>
+					<%=msg%>
+				<%		
+					}
+				%>
+			</div>
+			<!-- 삭제 폼 -->
+			<h4>회원 탈퇴</h4>
+			<div class="delete_form">	
+				<form action="<%=request.getContextPath()%>/member/deleteMemberActtion.jsp" method="post">
+					<div class="delete_member_div">
+					<strong>회원탈퇴를 위해 비밀번호를 입력해주세요</strong>
+						<div class="delete_pw">
+							<div>
+								<input type="password" name="memberPw" id="memberPw" class="memberPw" placeholder="비밀번호">
+							</div>
+						</div>
+						<div class="delete_btn">	
+							<button type="submit" class="sign_in_btn">회원탈퇴</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
-	</form>
-	<div>
-		<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		<div class="cell-footer">
+			<jsp:include page="/inc/copyright.jsp"></jsp:include>
+		</div>
 	</div>
+	
+	
+	
+	
+	
 </body>
 </html>

@@ -169,13 +169,13 @@
 		margin-right: 5px;
 	}
 	
-	/*로그인, 회원가입*/
-	.sign_in_form, .sign_up_form{
+	/*로그인, 회원가입, 회원탈퇴*/
+	.sign_in_form, .sign_up_form, .delete_form{
 		display:flex;
 		padding: 20px;
 		justify-content: center;
 	}
-	.sign_in, .sign_up_div{
+	.sign_in, .sign_up_div, .delete_member_div{
 		padding: 20px;
 		border: solid 2px #191919;
 		border-radius: 10px;
@@ -186,10 +186,13 @@
 	.sign_in_id, .sign_up_id{
 		padding-top: 10px;
 	}
+	.delete_pw{
+		padding-top: 20px;
+	}
 	.sign_in_pw, .sign_up_pw{
 		padding-top: 30px;
 	}
-	.sign_in_btn_div, .sign_up_btn_div{
+	.sign_in_btn_div, .sign_up_btn_div, .delete_btn{
 		display: flex;
 		justify-content: center;
 		padding-top: 30px;

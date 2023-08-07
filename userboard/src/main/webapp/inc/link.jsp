@@ -4,4 +4,4 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/ba8d291cc0.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/custom.css?v20230719">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/custom.css?v20230803">
